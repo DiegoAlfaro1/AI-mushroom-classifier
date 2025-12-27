@@ -205,3 +205,21 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Build directories
+build/
+cmake-build-*/
+
+# Qt Creator user files
+*.user
+*.user.*
+
+# Generated files
+*.moc
+*.rcc
+*.qrc.depends
+*.autosave
+
+# OS junk
+.DS_Store
+Thumbs.db
