@@ -13,28 +13,43 @@ int main(int argc, char *argv[])
     QString styleSheet = R"(
         /* GLOBAL SETTINGS */
         QWidget {
-            background-color: #F9F7F2; /* Creamy off-white */
+            background-color: #ebe6da; /* Warm parchment */
             font-family: "Segoe UI", "Roboto", sans-serif;
-            color: #2D2D2D;
+            color: #2E2A24; /* Soft soil brown */
         }
 
         /* LEFT PANEL - DROP ZONE */
         QLabel#imageDropZone {
-            border: 3px dashed #C0C0C0;
-            border-radius: 12px;
-            background-color: #ECEAE5;
-            color: #7A7A7A;
+            border: 3px dashed #B8B0A2; /* Clay gray */
+            border-radius: 14px;
+            background-color: #EFECE4; /* Light mushroom cap */
+            color: #6B665C;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;
+        }
+
+        /* TITLE */
+        QLabel#titleLabel {
+            font-size: 64px;
+            font-weight: 900;
+            color: #3B7A57; /* Deep forest green */
+        }
+
+        /* SUBTITLE */
+        QLabel#subtitleLabel {
+            font-size: 20px;
+            font-weight: 400;
+            color: #5F6F64; /* Mossy green-gray */
+            letter-spacing: 0.8px;
         }
 
         /* RIGHT PANEL - SAFETY BANNER */
         QLabel#safetyBanner {
-            background-color: #D97706; /* Warning Orange */
-            color: white;
+            background-color: #C97C2D; /* Burnt amber */
+            color: #FFFFFF;
             padding: 10px;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 8px;
+            font-weight: 700;
             font-size: 11px;
         }
 
@@ -42,73 +57,83 @@ int main(int argc, char *argv[])
         QLabel#resultTitle {
             font-size: 32px;
             font-weight: 800;
-            color: #1A1A1A;
+            color: #2A2A2A;
         }
 
         QLabel#resultSubtitle {
             font-size: 18px;
             font-style: italic;
-            color: #555555;
+            color: #6B6B6B;
         }
 
         /* CONFIDENCE BAR */
         QProgressBar {
             border: none;
-            background-color: #E0E0E0;
+            background-color: #DDD8CF; /* Soft stone */
             color: #FFFFFF;
-            border-radius: 6px;
+            border-radius: 8px;
             height: 30px;
             text-align: center;
         }
+
         QProgressBar::chunk {
-            background-color: #2F855A; /* Forest Green */
-            border-radius: 6px;
+            background-color: #4F8F68; /* Moss green */
+            border-radius: 8px;
         }
 
         /* BUTTONS */
         QPushButton {
             background-color: #FFFFFF;
-            border: 1px solid #D1D5DB;
-            border-radius: 6px;
-            padding: 8px 16px;
+            border: 1px solid #CFC7BA;
+            border-radius: 8px;
+            padding: 10px 18px;
             font-weight: 600;
-        }
-        QPushButton:hover {
-            background-color: #F3F4F6;
-            border-color: #9CA3AF;
+            color: #2E2A24;
         }
 
+        QPushButton:hover {
+            background-color: #F0EEE8;
+            border-color: #A89F91;
+        }
+
+        /* PRIMARY ACTION */
         QPushButton#primaryBtn {
-            background-color: #2F855A;
-            color: white;
+            background-color: #4F8F68; /* Forest moss */
+            color: #FFFFFF;
             border: none;
-            padding: 12px;
+            padding: 14px;
+            font-weight: 700;
         }
+
         QPushButton#primaryBtn:hover {
-            background-color: #276749;
+            background-color: #3E7355;
         }
+
+        /* SECONDARY RESULTS */
         QLabel#secondaryName {
             font-size: 14px;
-            color: #4A4A4A;
+            color: #5A554B;
         }
 
         QLabel#secondaryScore {
             font-size: 13px;
-            font-weight: bold;
-            color: #000000;
+            font-weight: 700;
+            color: #2E2A24;
         }
 
         /* SECONDARY PROGRESS BARS */
         QProgressBar#secondaryBar {
-            background-color: #E5E7EB; /* Light Grey background */
-            border-radius: 3px;
-            color: #000000;
+            background-color: #E4E1D9;
+            border-radius: 4px;
+            color: #2E2A24;
             border: none;
         }
+
         QProgressBar#secondaryBar::chunk {
-            background-color: #9CA3AF; /* Muted Grey-Blue for the fill */
-            border-radius: 3px;
+            background-color: #9B8F7A; /* Earth brown */
+            border-radius: 4px;
         }
+
     )";
 
     // Apply the styles to the whole app

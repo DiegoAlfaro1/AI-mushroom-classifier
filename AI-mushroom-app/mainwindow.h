@@ -29,6 +29,8 @@ private:
     QLabel *resultSubtitle;
     QProgressBar *confidenceBar;
     QLabel *safetyBanner;
+    QLabel *titleLabel;
+    QLabel *subtitleLabel;
 
     struct PredictionRow {
         QLabel* nameLabel;

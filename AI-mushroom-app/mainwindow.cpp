@@ -23,6 +23,12 @@ void MainWindow::setupUi() {
     mainLayout->setContentsMargins(20, 20, 20, 20);
     mainLayout->setSpacing(30);
 
+    QFrame *leftPanel = new QFrame();
+    leftPanel->setFixedWidth(550);
+    QVBoxLayout*leftLayout = new QVBoxLayout(leftPanel);
+    leftLayout->setContentsMargins(0,0,0,0);
+    leftLayout->setSpacing(15);
+
     // --- LEFT PANEL (Image Display) ---
     imageLabel = new QLabel("Drop Image Here");
     imageLabel->setAlignment(Qt::AlignCenter);
@@ -55,9 +61,26 @@ void MainWindow::setupUi() {
     // Connect the click signal to our reset function
     connect(closeBtn, &QPushButton::clicked, this, &MainWindow::resetImage);
 
+    // --- Tittle ---
+    titleLabel = new QLabel("SHROOMID");
+    titleLabel->setAlignment(Qt::AlignCenter);
+    titleLabel->setObjectName("titleLabel");
+
+    // --- Subtitle ---
+    subtitleLabel = new QLabel("AI-Powered Mushroom Classification");
+    subtitleLabel->setAlignment(Qt::AlignCenter);
+    subtitleLabel->setObjectName("subtitleLabel");
+
+
+    leftLayout->addWidget(titleLabel);
+    leftLayout->addSpacing(4);
+    leftLayout->addWidget(subtitleLabel);
+    leftLayout->addSpacing(10);
+    leftLayout->addWidget(imageLabel);
+
     // --- RIGHT PANEL (Results & Controls) ---
     QFrame *rightPanel = new QFrame();
-    rightPanel->setFixedWidth(350); // Fixed width for result sidebar
+    rightPanel->setFixedWidth(450); // Fixed width for result sidebar
     QVBoxLayout *rightLayout = new QVBoxLayout(rightPanel);
     rightLayout->setContentsMargins(0, 0, 0, 0);
     rightLayout->setSpacing(15);
@@ -68,15 +91,13 @@ void MainWindow::setupUi() {
     safetyBanner->setObjectName("safetyBanner");
 
     // B. Results Text
-    resultTitle = new QLabel("Fly Agaric");
+    resultTitle = new QLabel("Results will appear here");
     resultTitle->setObjectName("resultTitle");
-    resultSubtitle = new QLabel("Amanita muscaria");
-    resultSubtitle->setObjectName("resultSubtitle");
 
     // C. Confidence Bar
     QLabel *confLabel = new QLabel("Confidence Match:");
     confidenceBar = new QProgressBar();
-    confidenceBar->setValue(98);
+    confidenceBar->setValue(100);
     confidenceBar->setTextVisible(true);
     confidenceBar->setFormat("%p%");
 
@@ -91,7 +112,6 @@ void MainWindow::setupUi() {
     rightLayout->addWidget(safetyBanner);
     rightLayout->addSpacing(10);
     rightLayout->addWidget(resultTitle);
-    rightLayout->addWidget(resultSubtitle);
     rightLayout->addSpacing(10);
     rightLayout->addWidget(confLabel);
     rightLayout->addWidget(confidenceBar);
@@ -128,17 +148,8 @@ void MainWindow::setupUi() {
         secondaryPredictions.append(row);
     }
 
-    // TEST DATA (Remove this later)
-    if (!secondaryPredictions.isEmpty()) {
-        secondaryPredictions[0].nameLabel->setText("Amanita pantherina");
-        secondaryPredictions[0].bar->setValue(12);
-
-        secondaryPredictions[1].nameLabel->setText("Russula emetica");
-        secondaryPredictions[1].bar->setValue(4);
-    }
-
     // --- FINAL ASSEMBLY ---
-    mainLayout->addWidget(imageLabel, 2); // 66% width
+    mainLayout->addWidget(leftPanel, 2); // 66% width
     mainLayout->addWidget(rightPanel, 1); // 33% width
 }
 
