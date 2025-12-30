@@ -71,7 +71,7 @@ class BaselineCNN(nn.Module):
 
 def load_checkpoint(checkpoint_path, device='cpu'):
     """Load checkpoint and extract model info."""
-    checkpoint = torch.load(checkpoint_path, map_location=device)
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
 
     num_classes = checkpoint['num_classes']
     class_names = checkpoint.get('class_names', [])
@@ -90,7 +90,7 @@ def load_checkpoint(checkpoint_path, device='cpu'):
     }
 
 
-def export_to_onnx(model, output_path, img_size=224, opset_version=17):
+def export_to_onnx(model, output_path, img_size=224, opset_version=18):
     """Export PyTorch model to ONNX format."""
     model.eval()
 
