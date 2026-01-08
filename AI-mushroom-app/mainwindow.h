@@ -1,3 +1,4 @@
+#include "apiclient.h"
 #include <QMainWindow>
 #include <QLabel>
 #include <QProgressBar>
@@ -24,6 +25,8 @@ private:
 
     // UI Pointers
     QPushButton *closeBtn;
+    QPushButton *analyzeBtn;
+    QString currentFilePath;
     QLabel *imageLabel;
     QLabel *resultTitle;
     QLabel *resultSubtitle;
@@ -39,6 +42,12 @@ private:
 
     QList<PredictionRow> secondaryPredictions;
 
+    ApiClient *apiClient;
+    const QString API_URL = "http://localhost:5000/predict";
+
 private slots:
     void resetImage();
+    void onAnalyzeClicked();
+    void onAnalysisSuccess(QList<Prediction> results);
+    void onAnalysisError(QString message);
 };

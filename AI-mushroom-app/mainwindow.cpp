@@ -10,6 +10,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Enable Drop on the window
     setAcceptDrops(true);
 
+    // --- API CLIENT SETUP ---
+    apiClient = new ApiClient(this);
+    connect(apiClient, &ApiClient::analysisFinished, this, &MainWindow::onAnalysisSuccess);
+    connect(apiClient, &ApiClient::analysisFailed, this, &MainWindow::onAnalysisError);
+
     // Set Window Properties
     setWindowTitle("ShroomID - Deep Learning Classifier");
     resize(1000, 600);
@@ -118,9 +123,15 @@ void MainWindow::setupUi() {
     rightLayout->addLayout(btnLayout);
     rightLayout->addStretch(); // Pushes everything up
 
-    QPushButton *resetBtn = new QPushButton("Analyze Image");
-    resetBtn->setObjectName("primaryBtn");
-    rightLayout->addWidget(resetBtn);
+    analyzeBtn = new QPushButton("Analyze Image"); // Assign to class member
+    analyzeBtn->setObjectName("primaryBtn");
+    analyzeBtn->setCursor(Qt::PointingHandCursor);
+    // Disable it initially until an image is dropped
+    analyzeBtn->setEnabled(false);
+    rightLayout->addWidget(analyzeBtn);
+
+    // Connect the click signal
+    connect(analyzeBtn, &QPushButton::clicked, this, &MainWindow::onAnalyzeClicked);
 
     // --- Secondary results section ---
     QLabel *secondaryHeader = new QLabel("Other possibilities:");
@@ -194,9 +205,18 @@ void MainWindow::dropEvent(QDropEvent *event) {
         imageLabel->setText(""); // Remove "Drop Here" text
         closeBtn->show();
         closeBtn -> raise();
+
+        // Store the image path for later use
+        currentFilePath = filePath;
+
+        // UI Feedback
+        analyzeBtn->setEnabled(true);
+        resultTitle->setText("Ready to Analyze");
+        confidenceBar->setValue(0);
     }
 }
 
+// Reset image if not needed anymore
 void MainWindow::resetImage(){
 
     imageLabel->setPixmap(QPixmap());
@@ -214,4 +234,43 @@ void MainWindow::resetImage(){
     )");
 
     qDebug() << "Image closed by user";
+}
+
+// Handle Success
+void MainWindow::onAnalysisSuccess(QList<Prediction> results) {
+    analyzeBtn->setEnabled(true);
+
+    if (results.isEmpty()) return;
+
+    Prediction top = results[0];
+    resultTitle->setText(top.species);
+    confidenceBar->setValue((int)(top.confidence * 100));
+
+    // Fill secondary list (same logic as before)
+    for (int i = 0; i < 4; i++) {
+        if (i + 1 < results.size()) {
+            secondaryPredictions[i].nameLabel->setText(results[i+1].species);
+            secondaryPredictions[i].bar->setValue((int)(results[i+1].confidence * 100));
+        } else {
+            secondaryPredictions[i].nameLabel->setText("-");
+            secondaryPredictions[i].bar->setValue(0);
+        }
+    }
+}
+
+// Handle Error
+void MainWindow::onAnalysisError(QString message) {
+    analyzeBtn->setEnabled(true);
+    resultTitle->setText("Error");
+    safetyBanner->setText("❌ " + message);
+    safetyBanner->setStyleSheet("background-color: #DC2626; color: white; padding: 12px;");
+}
+
+void MainWindow::onAnalyzeClicked() {
+    if (currentFilePath.isEmpty()) return;
+
+    resultTitle->setText("Getting results...");
+    analyzeBtn->setEnabled(false);
+
+    apiClient->analyzeImage(currentFilePath, API_URL);
 }
