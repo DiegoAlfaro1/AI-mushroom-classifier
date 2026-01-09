@@ -1,0 +1,1 @@
+# FastAPI Mushroom Classifier Application
