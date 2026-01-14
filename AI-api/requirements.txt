@@ -11,6 +11,7 @@ psycopg2-binary==2.9.9
 # AI/ML - PyTorch for .pth model loading
 torch==2.1.2
 torchvision==0.16.2
+timm==0.9.12
 pillow==10.2.0
 
 # Utilities
