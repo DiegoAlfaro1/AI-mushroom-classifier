@@ -34,6 +34,7 @@ private:
     QLabel *safetyBanner;
     QLabel *titleLabel;
     QLabel *subtitleLabel;
+    QLabel *loadingLabel; // Loading spinner/indicator
 
     struct PredictionRow {
         QLabel* nameLabel;
@@ -43,11 +44,13 @@ private:
     QList<PredictionRow> secondaryPredictions;
 
     ApiClient *apiClient;
-    const QString API_URL = "http://localhost:8000/api/v1/predict";
+    const QString API_URL = "http://localhost:8000/api/v1/predict/";
+    const QString HEALTH_URL = "http://localhost:8000/api/v1/health/";
 
 private slots:
     void resetImage();
     void onAnalyzeClicked();
     void onAnalysisSuccess(QList<Prediction> results);
     void onAnalysisError(QString message);
+    void onHealthCheckFinished(bool isHealthy, QString message);
 };
