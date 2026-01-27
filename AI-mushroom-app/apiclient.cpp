@@ -24,8 +24,7 @@ void ApiClient::analyzeImage(const QString &filePath, const QString &apiUrl) {
 
     // Check file size (10MB limit)
     qint64 fileSize = file->size();
-    const qint64 MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-    if (fileSize > MAX_FILE_SIZE) {
+    if (fileSize > ApiConstants::MAX_FILE_SIZE) {
         emit analysisFailed("File too large. Maximum size is 10MB.");
         file->close();
         delete file;
@@ -35,8 +34,7 @@ void ApiClient::analyzeImage(const QString &filePath, const QString &apiUrl) {
     // Validate file extension
     QFileInfo fileInfo(filePath);
     QString extension = fileInfo.suffix().toLower();
-    QStringList allowedExtensions = {"jpg", "jpeg", "png", "webp"};
-    if (!allowedExtensions.contains(extension)) {
+    if (!ApiConstants::ALLOWED_EXTENSIONS.contains(extension)) {
         emit analysisFailed("Unsupported file format. Allowed: JPG, PNG, WEBP.");
         file->close();
         delete file;
@@ -61,7 +59,7 @@ void ApiClient::analyzeImage(const QString &filePath, const QString &apiUrl) {
     QHttpPart topKPart;
     topKPart.setHeader(QNetworkRequest::ContentDispositionHeader,
                       QVariant("form-data; name=\"top_k\""));
-    topKPart.setBody("5"); // Hardcoded to 5 (1 top + 4 secondary predictions)
+    topKPart.setBody(QString::number(ApiConstants::DEFAULT_TOP_K).toUtf8());
     multiPart->append(topKPart);
 
     // 3. Send Request

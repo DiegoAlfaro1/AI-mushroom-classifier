@@ -196,9 +196,9 @@ void MainWindow::dropEvent(QDropEvent *event) {
 
     // VALIDATION CHECK
     if(extension.toLower() != "png" && extension.toLower() != "jpg" && extension.toLower() != "jpeg" && extension.toLower() != "webp"){
-        qDebug() << "ERROR: Unsoported file format";
+        qDebug() << "ERROR: Unsupported file format";
 
-        imageLabel -> setText("Unsuported format\n(JPG, PNG, or WEBP only)");
+        imageLabel -> setText("Unsupported format\n(JPG, PNG, or WEBP only)");
         imageLabel -> setStyleSheet("border: 2px dashed #DC2626; color: #DC2626; font-size: 18px; font-weight: bold; ");
 
         QTimer::singleShot(5000, this, [this](){

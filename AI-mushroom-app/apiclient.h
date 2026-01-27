@@ -8,6 +8,14 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QStringList>
+
+// Constants for file validation and API parameters
+namespace ApiConstants {
+    const qint64 MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    const QStringList ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "webp"};
+    const int DEFAULT_TOP_K = 5; // 1 top prediction + 4 secondary predictions
+}
 
 struct Prediction {
     QString species;
