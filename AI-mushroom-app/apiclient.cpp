@@ -2,6 +2,7 @@
 #include <QHttpMultiPart>
 #include <QFileInfo>
 #include <QMimeDatabase>
+#include <QDebug>
 
 ApiClient::ApiClient(QObject *parent) : QObject(parent) {
     manager = new QNetworkAccessManager(this);
