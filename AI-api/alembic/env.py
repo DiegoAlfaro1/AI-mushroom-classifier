@@ -9,8 +9,8 @@ from alembic import context
 load_dotenv()
 
 # Import your SQLAlchemy Base and models
-from app.database import Base
-from app.models import prediction  # noqa: F401 (needed for autogenerate)
+from infrastructure.database import Base
+from infrastructure.models import prediction  # noqa: F401 (needed for autogenerate)
 
 # Alembic Config object
 config = context.config
@@ -71,6 +71,7 @@ def run_migrations_online() -> None:
 
         with context.begin_transaction():
             context.run_migrations()
+
 
 
 # Entry point
