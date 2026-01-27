@@ -14,10 +14,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     apiClient = new ApiClient(this);
     connect(apiClient, &ApiClient::analysisFinished, this, &MainWindow::onAnalysisSuccess);
     connect(apiClient, &ApiClient::analysisFailed, this, &MainWindow::onAnalysisError);
+    connect(apiClient, &ApiClient::healthCheckFinished, this, &MainWindow::onHealthCheckFinished);
 
     // Set Window Properties
     setWindowTitle("ShroomID - Deep Learning Classifier");
     resize(1000, 600);
+
+    // Perform health check on startup
+    apiClient->checkHealth(HEALTH_URL);
 }
 
 void MainWindow::setupUi() {
@@ -118,6 +122,14 @@ void MainWindow::setupUi() {
     rightLayout->addSpacing(10);
     rightLayout->addWidget(resultTitle);
     rightLayout->addSpacing(10);
+    
+    // Loading indicator
+    loadingLabel = new QLabel("⏳ Analyzing...");
+    loadingLabel->setAlignment(Qt::AlignCenter);
+    loadingLabel->setStyleSheet("font-size: 14px; font-weight: bold; color: #2563EB; padding: 10px;");
+    loadingLabel->hide(); // Hidden by default
+    rightLayout->addWidget(loadingLabel);
+    
     rightLayout->addWidget(confLabel);
     rightLayout->addWidget(confidenceBar);
     rightLayout->addLayout(btnLayout);
@@ -183,10 +195,10 @@ void MainWindow::dropEvent(QDropEvent *event) {
     qDebug() << "Extension: " << extension;
 
     // VALIDATION CHECK
-    if(extension.toLower() != "png" && extension.toLower() != "jpg" && extension.toLower() != "jpeg"){
+    if(extension.toLower() != "png" && extension.toLower() != "jpg" && extension.toLower() != "jpeg" && extension.toLower() != "webp"){
         qDebug() << "ERROR: Unsoported file format";
 
-        imageLabel -> setText("Unsuported format\n(JPG or PNG only)");
+        imageLabel -> setText("Unsuported format\n(JPG, PNG, or WEBP only)");
         imageLabel -> setStyleSheet("border: 2px dashed #DC2626; color: #DC2626; font-size: 18px; font-weight: bold; ");
 
         QTimer::singleShot(5000, this, [this](){
@@ -239,6 +251,7 @@ void MainWindow::resetImage(){
 // Handle Success
 void MainWindow::onAnalysisSuccess(QList<Prediction> results) {
     analyzeBtn->setEnabled(true);
+    loadingLabel->hide(); // Hide loading indicator
 
     if (results.isEmpty()) return;
 
@@ -261,6 +274,7 @@ void MainWindow::onAnalysisSuccess(QList<Prediction> results) {
 // Handle Error
 void MainWindow::onAnalysisError(QString message) {
     analyzeBtn->setEnabled(true);
+    loadingLabel->hide(); // Hide loading indicator
     resultTitle->setText("Error");
     safetyBanner->setText("❌ " + message);
     safetyBanner->setStyleSheet("background-color: #DC2626; color: white; padding: 12px;");
@@ -270,7 +284,22 @@ void MainWindow::onAnalyzeClicked() {
     if (currentFilePath.isEmpty()) return;
 
     resultTitle->setText("Getting results...");
+    loadingLabel->show(); // Show loading indicator
     analyzeBtn->setEnabled(false);
 
     apiClient->analyzeImage(currentFilePath, API_URL);
+}
+
+void MainWindow::onHealthCheckFinished(bool isHealthy, QString message) {
+    qDebug() << "Health check completed:" << message;
+    
+    if (!isHealthy) {
+        // Show warning in the subtitle if API is not healthy
+        subtitleLabel->setText("⚠️ " + message);
+        subtitleLabel->setStyleSheet("color: #DC2626; font-weight: bold;");
+    } else {
+        // API is healthy, show normal subtitle
+        subtitleLabel->setText("AI-Powered Mushroom Classification");
+        subtitleLabel->setStyleSheet("");
+    }
 }
