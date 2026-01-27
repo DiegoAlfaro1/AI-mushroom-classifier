@@ -43,7 +43,7 @@ private:
     QList<PredictionRow> secondaryPredictions;
 
     ApiClient *apiClient;
-    const QString API_URL = "http://localhost:5000/predict";
+    const QString API_URL = "http://localhost:8000/api/v1/predict";
 
 private slots:
     void resetImage();
