@@ -1,4 +1,5 @@
 #include "apiclient.h"
+#include "clickablelabel.h"
 #include <QMainWindow>
 #include <QLabel>
 #include <QProgressBar>
@@ -27,7 +28,7 @@ private:
     QPushButton *closeBtn;
     QPushButton *analyzeBtn;
     QString currentFilePath;
-    QLabel *imageLabel;
+    ClickableLabel *imageLabel;
     QLabel *resultTitle;
     QLabel *resultSubtitle;
     QProgressBar *confidenceBar;
@@ -50,6 +51,7 @@ private:
 private slots:
     void resetImage();
     void onAnalyzeClicked();
+    void onImageZoneClicked();
     void onAnalysisSuccess(QList<Prediction> results);
     void onAnalysisError(QString message);
     void onHealthCheckFinished(bool isHealthy, QString message);

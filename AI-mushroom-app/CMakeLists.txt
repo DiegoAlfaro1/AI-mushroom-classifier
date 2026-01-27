@@ -19,6 +19,10 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        welcomewidget.cpp
+        welcomewidget.h
+        clickablelabel.cpp
+        clickablelabel.h
         ${TS_FILES}
 )
 
