@@ -67,6 +67,9 @@ void ApiClient::analyzeImage(const QString &filePath, const QString &apiUrl) {
     QNetworkReply *reply = manager->post(request, multiPart);
     multiPart->setParent(reply);
 
+    // Tag this request as a prediction request
+    reply->setProperty("requestType", "prediction");
+
     // --- CRITICAL CHANGE: Debugging & Error Handling ---
 
     // A. Connect specific error signal (Works best in Qt 6)
@@ -88,6 +91,14 @@ void ApiClient::onNetworkReply(QNetworkReply *reply) {
     qDebug() << "✅ Request Finished. URL:" << reply->url().toString();
     qDebug() << "   Error Code:" << reply->error();
     qDebug() << "   HTTP Status:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+    // Check if this is a health check request - those are handled by their own lambda
+    QString requestType = reply->property("requestType").toString();
+    if (requestType != "prediction") {
+        // Not a prediction request, skip processing here
+        // Health checks have their own handler via lambda
+        return;
+    }
 
     // Get HTTP status code
     int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
