@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network LinguistTools)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network LinguistTools SvgWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network LinguistTools SvgWidgets)
 
 set(TS_FILES AI-mushroom-app_es_HN.ts)
 
@@ -32,7 +32,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         apiclient.h
         apiclient.cpp
+        resources.qrc
     )
+    
+    # Set Windows application icon
+    if(WIN32)
+        target_sources(AI-mushroom-app PRIVATE app.rc)
+    endif()
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET AI-mushroom-app APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
@@ -59,6 +65,7 @@ target_link_libraries(AI-mushroom-app
     PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Network
+    Qt${QT_VERSION_MAJOR}::SvgWidgets
 )
 
 

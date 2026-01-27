@@ -4,10 +4,14 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <QIcon>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    
+    // Set application icon from embedded SVG resource
+    a.setWindowIcon(QIcon(":/assets/ShroomID-logo.svg"));
 
     // --- PASTE THE STYLES HERE ---
     // We use a raw string literal R"(...)" so we can write CSS normally

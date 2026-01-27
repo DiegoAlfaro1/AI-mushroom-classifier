@@ -1,6 +1,7 @@
 #include "welcomewidget.h"
 #include <QVBoxLayout>
 #include <QTimer>
+#include <QtSvgWidgets/QSvgWidget>
 
 WelcomeWidget::WelcomeWidget(QWidget *parent) : QWidget(parent) {
     setupUi();
@@ -15,22 +16,16 @@ void WelcomeWidget::setupUi() {
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
 
-    // Create placeholder logo label
-    // TODO: Replace this placeholder text with actual logo image (QPixmap) when available
-    logoLabel = new QLabel("LOGO", this);
-    logoLabel->setAlignment(Qt::AlignCenter);
-    logoLabel->setStyleSheet(
-        "font-size: 72px; "
-        "font-weight: bold; "
-        "color: #3B7A57; "
-    );
+    // Create SVG logo widget using embedded resource
+    logoWidget = new QSvgWidget(":/assets/ShroomID-logo.svg", this);
+    logoWidget->setFixedSize(300, 300);
 
-    // Add opacity effect
+    // Add opacity effect to the logo widget
     opacityEffect = new QGraphicsOpacityEffect(this);
     opacityEffect->setOpacity(0.0);
-    logoLabel->setGraphicsEffect(opacityEffect);
+    logoWidget->setGraphicsEffect(opacityEffect);
 
-    layout->addWidget(logoLabel);
+    layout->addWidget(logoWidget, 0, Qt::AlignCenter);
 }
 
 void WelcomeWidget::setupAnimation() {

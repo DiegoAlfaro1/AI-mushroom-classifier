@@ -2,10 +2,11 @@
 #define WELCOMEWIDGET_H
 
 #include <QWidget>
-#include <QLabel>
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
+
+class QSvgWidget;
 
 class WelcomeWidget : public QWidget {
     Q_OBJECT
@@ -17,7 +18,7 @@ signals:
     void finished();
 
 private:
-    QLabel *logoLabel;
+    QSvgWidget *logoWidget;
     QGraphicsOpacityEffect *opacityEffect;
     QSequentialAnimationGroup *animationGroup;
 
