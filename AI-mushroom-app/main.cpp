@@ -1,12 +1,17 @@
 #include "mainwindow.h"
+#include "welcomewidget.h"
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <QIcon>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    
+    // Set application icon from embedded SVG resource
+    a.setWindowIcon(QIcon(":/assets/ShroomID-logo.svg"));
 
     // --- PASTE THE STYLES HERE ---
     // We use a raw string literal R"(...)" so we can write CSS normally
@@ -150,7 +155,16 @@ int main(int argc, char *argv[])
         }
     }
 
-    MainWindow w;
-    w.show();
+    MainWindow *mainWindow = new MainWindow();
+    WelcomeWidget *welcomeWidget = new WelcomeWidget();
+    
+    // Connect welcome widget finished signal to show main window
+    QObject::connect(welcomeWidget, &WelcomeWidget::finished, [welcomeWidget, mainWindow]() {
+        welcomeWidget->hide();
+        mainWindow->show();
+        welcomeWidget->deleteLater();
+    });
+    
+    welcomeWidget->show();
     return a.exec();
 }

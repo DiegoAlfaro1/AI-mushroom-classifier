@@ -213,12 +213,14 @@ __marimo__/
 # Qt / CMake (if shared repo)
 # ======================================================
 cmake-build-*/
+build/
 *.user
 *.user.*
 *.moc
 *.rcc
 *.qrc.depends
 *.autosave
+AI-mushroom-app/AI-mushroom-app
 
 # ======================================================
 # OS junk

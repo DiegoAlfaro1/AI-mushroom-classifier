@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Gradient for mushroom cap -->
+    <linearGradient id="capGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E85D4C"/>
+      <stop offset="50%" style="stop-color:#C94235"/>
+      <stop offset="100%" style="stop-color:#9E2A2B"/>
+    </linearGradient>
+    
+    <!-- Gradient for stem -->
+    <linearGradient id="stemGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F5E6D3"/>
+      <stop offset="50%" style="stop-color:#FFF8F0"/>
+      <stop offset="100%" style="stop-color:#E8D5C4"/>
+    </linearGradient>
+    
+    <!-- Gradient for background circle -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Neural network node glow -->
+    <filter id="nodeGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)"/>
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#3a506b" stroke-width="4"/>
+  
+  <!-- Neural network connections (behind mushroom) -->
+  <g opacity="0.6" filter="url(#nodeGlow)">
+    <!-- Left side connections -->
+    <line x1="60" y1="180" x2="120" y2="220" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="60" y1="280" x2="120" y2="260" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="60" y1="380" x2="120" y2="300" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="120" y1="220" x2="160" y2="200" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="120" y1="260" x2="160" y2="240" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="120" y1="300" x2="160" y2="280" stroke="#4ECDC4" stroke-width="2"/>
+    
+    <!-- Right side connections -->
+    <line x1="452" y1="180" x2="392" y2="220" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="452" y1="280" x2="392" y2="260" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="452" y1="380" x2="392" y2="300" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="392" y1="220" x2="352" y2="200" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="392" y1="260" x2="352" y2="240" stroke="#4ECDC4" stroke-width="2"/>
+    <line x1="392" y1="300" x2="352" y2="280" stroke="#4ECDC4" stroke-width="2"/>
+  </g>
+  
+  <!-- Neural network nodes (left) -->
+  <g filter="url(#nodeGlow)">
+    <circle cx="60" cy="180" r="8" fill="#4ECDC4"/>
+    <circle cx="60" cy="280" r="8" fill="#4ECDC4"/>
+    <circle cx="60" cy="380" r="8" fill="#4ECDC4"/>
+    <circle cx="120" cy="220" r="6" fill="#45B7AA"/>
+    <circle cx="120" cy="260" r="6" fill="#45B7AA"/>
+    <circle cx="120" cy="300" r="6" fill="#45B7AA"/>
+  </g>
+  
+  <!-- Neural network nodes (right) -->
+  <g filter="url(#nodeGlow)">
+    <circle cx="452" cy="180" r="8" fill="#4ECDC4"/>
+    <circle cx="452" cy="280" r="8" fill="#4ECDC4"/>
+    <circle cx="452" cy="380" r="8" fill="#4ECDC4"/>
+    <circle cx="392" cy="220" r="6" fill="#45B7AA"/>
+    <circle cx="392" cy="260" r="6" fill="#45B7AA"/>
+    <circle cx="392" cy="300" r="6" fill="#45B7AA"/>
+  </g>
+  
+  <!-- Mushroom stem -->
+  <path d="M220 270 
+           Q210 320 215 380 
+           Q220 420 240 430 
+           Q256 435 272 430 
+           Q292 420 297 380 
+           Q302 320 292 270" 
+        fill="url(#stemGradient)" 
+        stroke="#D4C4B0" 
+        stroke-width="2"/>
+  
+  <!-- Stem texture lines -->
+  <path d="M235 290 Q256 295 277 290" fill="none" stroke="#E0D0C0" stroke-width="1.5" opacity="0.5"/>
+  <path d="M230 330 Q256 338 282 330" fill="none" stroke="#E0D0C0" stroke-width="1.5" opacity="0.5"/>
+  <path d="M232 370 Q256 378 280 370" fill="none" stroke="#E0D0C0" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Mushroom cap -->
+  <ellipse cx="256" cy="200" rx="130" ry="85" fill="url(#capGradient)"/>
+  
+  <!-- Cap highlight -->
+  <ellipse cx="230" cy="165" rx="45" ry="25" fill="#FF7B6B" opacity="0.4"/>
+  <ellipse cx="215" cy="155" rx="20" ry="12" fill="#FFB5A7" opacity="0.3"/>
+  
+  <!-- Cap spots (classic mushroom look) -->
+  <circle cx="200" cy="175" r="18" fill="#FFF8F0" opacity="0.9"/>
+  <circle cx="270" cy="150" r="14" fill="#FFF8F0" opacity="0.9"/>
+  <circle cx="310" cy="190" r="16" fill="#FFF8F0" opacity="0.9"/>
+  <circle cx="180" cy="220" r="12" fill="#FFF8F0" opacity="0.85"/>
+  <circle cx="330" cy="220" r="10" fill="#FFF8F0" opacity="0.85"/>
+  <circle cx="240" cy="210" r="10" fill="#FFF8F0" opacity="0.8"/>
+  
+  <!-- Cap underside (gills hint) -->
+  <path d="M140 240 Q256 280 372 240" fill="none" stroke="#8B3A3A" stroke-width="3" opacity="0.3"/>
+  
+  <!-- Static scanning line -->
+  <rect x="126" y="195" width="260" height="3" fill="#4ECDC4" opacity="0.5"/>
+  
+  <!-- Corner brackets (analysis frame) -->
+  <g stroke="#4ECDC4" stroke-width="3" fill="none" opacity="0.8">
+    <!-- Top left -->
+    <path d="M130 130 L130 150 M130 130 L150 130"/>
+    <!-- Top right -->
+    <path d="M382 130 L382 150 M382 130 L362 130"/>
+    <!-- Bottom left -->
+    <path d="M130 280 L130 260 M130 280 L150 280"/>
+    <!-- Bottom right -->
+    <path d="M382 280 L382 260 M382 280 L362 280"/>
+  </g>
+  
+  <!-- Small data points around mushroom -->
+  <g fill="#4ECDC4" opacity="0.6">
+    <circle cx="150" cy="320" r="3"/>
+    <circle cx="165" cy="350" r="2"/>
+    <circle cx="140" cy="360" r="2.5"/>
+    <circle cx="362" cy="320" r="3"/>
+    <circle cx="347" cy="350" r="2"/>
+    <circle cx="372" cy="360" r="2.5"/>
+  </g>
+  
+  <!-- Binary/data text decoration -->
+  <text x="85" y="420" font-family="monospace" font-size="10" fill="#4ECDC4" opacity="0.5">CNN</text>
+  <text x="400" y="420" font-family="monospace" font-size="10" fill="#4ECDC4" opacity="0.5">AI</text>
+</svg>
