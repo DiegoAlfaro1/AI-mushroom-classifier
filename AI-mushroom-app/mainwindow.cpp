@@ -192,44 +192,7 @@ void MainWindow::dropEvent(QDropEvent *event) {
     if (urls.isEmpty()) return;
 
     QString filePath = urls.first().toLocalFile();
-
-    QFileInfo fileInfo(filePath);
-    QString extension = fileInfo.suffix();
-
-    qDebug() << "Extension: " << extension;
-
-    // VALIDATION CHECK
-    if(extension.toLower() != "png" && extension.toLower() != "jpg" && extension.toLower() != "jpeg" && extension.toLower() != "webp"){
-        qDebug() << "ERROR: Unsupported file format";
-
-        imageLabel -> setText("Unsupported format\n(JPG, PNG, or WEBP only)");
-        imageLabel -> setStyleSheet("border: 2px dashed #DC2626; color: #DC2626; font-size: 18px; font-weight: bold; ");
-
-        QTimer::singleShot(5000, this, [this](){
-            imageLabel -> setText("Drop Image Here");
-
-            imageLabel->setStyleSheet("border: 3px dashed #C0C0C0; border-radius: 12px; background-color: #ECEAE5; color: #7A7A7A; font-size: 18px; font-weight: bold;");
-        });
-        return;
-    }
-
-    qDebug() << "File with correct type";
-    QPixmap pix(filePath);
-    if (!pix.isNull()) {
-        // Scale image to fit while keeping aspect ratio
-        imageLabel->setPixmap(pix.scaled(imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        imageLabel->setText(""); // Remove "Drop Here" text
-        closeBtn->show();
-        closeBtn -> raise();
-
-        // Store the image path for later use
-        currentFilePath = filePath;
-
-        // UI Feedback
-        analyzeBtn->setEnabled(true);
-        resultTitle->setText("Ready to Analyze");
-        confidenceBar->setValue(0);
-    }
+    loadAndDisplayImage(filePath);
 }
 
 // Reset image if not needed anymore
@@ -322,7 +285,11 @@ void MainWindow::onImageZoneClicked() {
         return;
     }
 
-    // Validate and load the image using the same logic as dropEvent
+    loadAndDisplayImage(filePath);
+}
+
+void MainWindow::loadAndDisplayImage(const QString& filePath) {
+    // Validate and load the image
     QFileInfo fileInfo(filePath);
     QString extension = fileInfo.suffix();
 

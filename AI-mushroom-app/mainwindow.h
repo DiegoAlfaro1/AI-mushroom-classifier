@@ -23,6 +23,7 @@ protected:
 
 private:
     void setupUi();
+    void loadAndDisplayImage(const QString& filePath);
 
     // UI Pointers
     QPushButton *closeBtn;
