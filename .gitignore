@@ -221,6 +221,8 @@ build/
 *.qrc.depends
 *.autosave
 AI-mushroom-app/AI-mushroom-app
+ShroomIDDeploy/
+Output/
 
 # ======================================================
 # OS junk
